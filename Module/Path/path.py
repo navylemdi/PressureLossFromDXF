@@ -1,9 +1,9 @@
-from Module import *
+from Module.Entities import *
 import numpy as np
 import matplotlib.pyplot as plt
 
 class path():
-    def __init__(self, deck, Diameter):
+    def __init__(self, deck, Diameter: float):
         self.Nb_lines=deck.Nb_lines
         self.Nb_arcs=deck.Nb_arc
         self.lines=[]
@@ -20,7 +20,7 @@ class path():
 
     def plot(self):
         fig=plt.figure(0)
-        ax=fig.add_subplot(projection='3d')
+        ax=fig.add_subplot(111, projection='3d')
         for i,el in enumerate(self.Entities):
             el.plot(ax,str(i))
         ax.set_xlabel("x axis")

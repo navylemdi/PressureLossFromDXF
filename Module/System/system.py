@@ -13,10 +13,10 @@ class system():
         for i,el in enumerate(path.Entities):
             if el.Type == 'Line':
                 if self.Re<=2300 and self.K[i]==0:
-                    print('0 < Re <= 2300 --> Poiseuille OK')
+                    print('Segment ', i, ': 0 < Re <= 2300 --> Poiseuille OK')
                     self.K[i]=self.Poiseuille()
                 if self.Re>=4000 and self.Re<= 100_000 and self.K[i]==0:
-                    print('4000 <= Re <= 100 000 --> Blasius OK')
+                    print('Segment ', i, ': 4000 <= Re <= 100 000 --> Blasius OK')
                     self.K[i] = self.Blasius()
             if el.Type =='Arc' and self.Kp[i]==0:
                 self.Kp[i] = self.Elbow(path, el)

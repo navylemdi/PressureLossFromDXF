@@ -33,8 +33,8 @@ class parser():
             elif int(lines[lines.index("$INSUNITS\n")+2]) ==6:
                 self.Unit=1
                 self.UnitID = 'm'
-            #print("Units in ", self.UnitID)
-
+            print("Length Units in ", self.UnitID)
+            
             StartEntities=lines.index('ENTITIES\n')
             EndEntities=lines[StartEntities:].index('ENDSEC\n')+StartEntities
             Newlist = lines[StartEntities:EndEntities+1]
@@ -48,8 +48,7 @@ class parser():
                     Index_Droites.append(index)
                 if elem=='ARC\n':
                     Index_ARC.append(index)
-            #print(Index_Droites)
-            #print(Index_ARC)
+
             self.Droite=np.zeros((self.Nb_lines, 7))#6 coordonées pour décrire une droite (2 points)+ 1 donnée d'index 
             for i in range(self.Nb_lines):
                 for j in range(6):

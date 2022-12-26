@@ -55,12 +55,15 @@ class parser():
                 for j in range(6):
                     self.Droite[i, j] = str(Newlist[Index_Droites[i]+12+j*2])
                 self.Droite[i, 6] = str(Index_Droites[i])
-            self.Arc=np.zeros((self.Nb_arc, 7))#6 coordonées pour décrire un arc (1 centre, un rayon, et angle de début et angle de fin)+ 1 donnée d'index 
+            self.Arc=np.zeros((self.Nb_arc, 10))#6 coordonées pour décrire un arc (1 centre, un rayon, et angle de début et angle de fin)+ 1 donnée d'index 
             for i in range(self.Nb_arc):
                 for j in range(4):
                     self.Arc[i, j] = str(Newlist[Index_ARC[i]+12+j*2])
                 self.Arc[i, 4] = str(Newlist[Index_ARC[i]+28])
                 self.Arc[i, 5] = str(Newlist[Index_ARC[i]+30])
                 self.Arc[i, 6] = str(Index_ARC[i])
+                self.Arc[i, 7] = str(Newlist[Index_ARC[i]+20])
+                self.Arc[i, 8] = str(Newlist[Index_ARC[i]+22])
+                self.Arc[i, 9] = str(Newlist[Index_ARC[i]+24])
             
         f.close()

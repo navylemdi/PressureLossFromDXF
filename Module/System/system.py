@@ -11,7 +11,6 @@ class system():
         if Kp:
             self.Kp=Kp
         for i,el in enumerate(path.Entities):
-            
             if el.Type == 'Line':
                 if self.Re<=2300 and self.K[i]==0:
                     print('0 < Re <= 2300 --> Poiseuille OK')

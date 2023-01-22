@@ -34,21 +34,16 @@ class parser():
                 self.Unit=1
                 self.UnitID = 'm'
             print("Length Units in ", self.UnitID)
-            
+
             StartEntities=lines.index('ENTITIES\n')
             EndEntities=lines[StartEntities:].index('ENDSEC\n')+StartEntities
             Newlist = lines[StartEntities:EndEntities+1]
             self.Nb_lines=Newlist.count('LINE\n')
             self.Nb_arc=Newlist.count('ARC\n')
             
-            Index_Droites=[]
-            Index_ARC=[]
-            for index, elem in enumerate(Newlist):
-                if elem=='LINE\n':
-                    Index_Droites.append(index)
-                if elem=='ARC\n':
-                    Index_ARC.append(index)
-
+            Index_Droites=[index for index, elem in enumerate(Newlist) if elem=='LINE\n']
+            Index_ARC=[index for index, elem in enumerate(Newlist) if elem=='ARC\n']
+            
             self.Droite=np.zeros((self.Nb_lines, 7))#6 coordonées pour décrire une droite (2 points)+ 1 donnée d'index 
             for i in range(self.Nb_lines):
                 for j in range(6):

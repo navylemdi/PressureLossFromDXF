@@ -3,6 +3,14 @@ import numpy as np
 
 class system():
     def __init__(self, path, fluid, K=[], Kp=[]):
+        """class to create a system
+
+        Args:
+            path (_type_): _description_
+            fluid (_type_): _description_
+            K (list, optional): _description_. Defaults to [].
+            Kp (list, optional): _description_. Defaults to [].
+        """
         self.Re=self.calc_Re(path, fluid)
         self.K=np.zeros(path.Nb_arcs+path.Nb_lines)
         self.Kp=np.zeros(path.Nb_arcs+path.Nb_lines)
@@ -39,7 +47,7 @@ class system():
         return 0.3164*self.Re**-0.25
 
     def Elbow(self, path, el):
-        return el.TotalAngle/np.pi * (0.131+1.847*(path.Diameter/el.radius)**7/2)
+        return np.abs(el.TotalAngle)/np.pi * (0.131+1.847*(path.Diameter/el.radius)**7/2)
     
     def DPline(self, path, fluid):
         return self.K*np.array([i.Length*path.Unit for i in path.Entities])*fluid.rho*(fluid.V**2)/(path.Diameter*2)

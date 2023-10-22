@@ -27,6 +27,7 @@ class system():
                     print('Segment ', i, ': 4000 <= Re <= 100 000 --> Blasius OK')
                     self.K[i] = self.Blasius()
             if el.Type =='Arc' and self.Kp[i]==0:
+                print('Calcul arc', i)
                 self.Kp[i] = self.Elbow(path, el)
         self.DPline = self.DPline(path, fluid)
         self.DPlineTotal = sum(self.DPline)

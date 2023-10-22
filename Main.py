@@ -1,10 +1,12 @@
 import numpy as np
 from Module import *
 
-deck=parser('/Users/yvan/Desktop/Venture Orbital System/PressureLossFromDXF/testdxf.txt')
+deck=parser("file.dxf")
 trajet=path(deck, Diameter=20e-3)
 water=fluid(rho=1000, V=1, Pinlet=120e5, nu=1.007e-6)
 print(water.mu)
 system1=system(trajet, water)
-print(system1.DPlineTotal)
-trajet.plot()
+print('Perte de charge arcs: ', round(system1.DParcTotal,0), 'Pa')
+print('Perte de charge lignes: ', round(system1.DPlineTotal,0), 'Pa')
+print('Perte de charge totale: ', round(system1.DPTotal, 0), 'Pa')
+#trajet.plot()

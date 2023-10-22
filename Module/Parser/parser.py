@@ -35,29 +35,41 @@ class parser():
                 self.UnitID = 'm'
             print("Length Units in ", self.UnitID)
 
-            StartEntities=lines.index('ENTITIES\n')
-            EndEntities=lines[StartEntities:].index('ENDSEC\n')+StartEntities
-            Newlist = lines[StartEntities:EndEntities+1]
-            self.Nb_lines=Newlist.count('LINE\n')
-            self.Nb_arc=Newlist.count('ARC\n')
+            StartEntities=lines.index('ENTITIES\n') #Index de début de la section ENTITIES
+            EndEntities=lines[StartEntities:].index('ENDSEC\n')+StartEntities #Index de fin de la section ENTITIES 
+            Entities = lines[StartEntities:EndEntities+1] #Liste d'entitées
+            self.Nb_lines=Entities.count('LINE\n') #Nombre d'éléments LINE
+            self.Nb_arc=Entities.count('ARC\n') #Nombre d'éléments ARC
             
-            Index_Droites=[index for index, elem in enumerate(Newlist) if elem=='LINE\n']
-            Index_ARC=[index for index, elem in enumerate(Newlist) if elem=='ARC\n']
+            Index_Droites=[index for index, elem in enumerate(Entities) if elem=='LINE\n']
+            Index_ARC=[index for index, elem in enumerate(Entities) if elem=='ARC\n']
             
-            self.Droite=np.zeros((self.Nb_lines, 7))#6 coordonées pour décrire une droite (2 points)+ 1 donnée d'index 
-            for i in range(self.Nb_lines):
-                for j in range(6):
-                    self.Droite[i, j] = str(Newlist[Index_Droites[i]+12+j*2])
+            Attributs_droite=[' 10\n', ' 20\n', ' 30\n', ' 11\n', ' 21\n', ' 31\n']
+            Attributs_arc=[' 10\n', ' 20\n', ' 30\n', ' 40\n', ' 50\n', ' 51\n']
+            self.Droite=np.zeros((self.Nb_lines, 7))#6 coordonées pour décrire une droite (2 points 3D)+ 1 donnée d'index 
+            for i in range(self.Nb_lines-1):
+                for j,att in enumerate(Attributs_droite):
+                    self.Droite[i, j] = str(Entities[Entities[Index_Droites[i]:Index_Droites[i+1]].index(att)+1+Index_Droites[i]])
                 self.Droite[i, 6] = str(Index_Droites[i])
-            self.Arc=np.zeros((self.Nb_arc, 10))#6 coordonées pour décrire un arc (1 centre, un rayon, et angle de début et angle de fin)+ 1 donnée d'index 
-            for i in range(self.Nb_arc):
-                for j in range(4):
-                    self.Arc[i, j] = str(Newlist[Index_ARC[i]+12+j*2])
-                self.Arc[i, 4] = str(Newlist[Index_ARC[i]+28])
-                self.Arc[i, 5] = str(Newlist[Index_ARC[i]+30])
+            for j,att in enumerate(Attributs_droite):
+                self.Droite[-1, j] = str(Entities[Entities[Index_Droites[-1]:2*Index_Droites[-1]-Index_Droites[-2]].index(att)+1+Index_Droites[-1]])
+            self.Droite[-1, 6] = str(Index_Droites[-1])
+
+            self.Arc=np.zeros((self.Nb_arc, 10))#6 coordonées pour décrire un arc (1 centre, un rayon, et angle de début et angle de fin) + 3 données de sens d'extrusion + 1 donnée d'index 
+            for i in range(self.Nb_arc-1):
+                for j,att in enumerate(Attributs_arc):
+                    self.Arc[i,j] = str(Entities[Entities[Index_ARC[i]:Index_ARC[i+1]].index(att)+1+Index_ARC[i]])
                 self.Arc[i, 6] = str(Index_ARC[i])
-                self.Arc[i, 7] = str(Newlist[Index_ARC[i]+20])
-                self.Arc[i, 8] = str(Newlist[Index_ARC[i]+22])
-                self.Arc[i, 9] = str(Newlist[Index_ARC[i]+24])
+            for j,att in enumerate(Attributs_arc):
+                self.Arc[-1,j] = str(Entities[Entities[Index_ARC[-1]:2*Index_ARC[-1]-Index_ARC[-2]].index(att)+1+Index_ARC[-1]])
+            self.Arc[-1, 6] = str(Index_ARC[-1])
+                # for j in range(4):
+                #     self.Arc[i, j] = str(Entities[Index_ARC[i]+12+j*2])
+                # self.Arc[i, 4] = str(Entities[Index_ARC[i]+28])
+                # self.Arc[i, 5] = str(Entities[Index_ARC[i]+30])
+                # self.Arc[i, 6] = str(Index_ARC[i])
+                # self.Arc[i, 7] = str(Entities[Index_ARC[i]+20])
+                # self.Arc[i, 8] = str(Entities[Index_ARC[i]+22])
+                # self.Arc[i, 9] = str(Entities[Index_ARC[i]+24])
             
         f.close()

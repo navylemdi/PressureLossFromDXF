@@ -2,9 +2,9 @@ import sys
 
 class fluid():
     def __init__(self, rho: float, V: float, Pinlet: float, mu: float = 0.0, nu: float = 0.0):
-        self.rho = rho
-        self.V = V
-        self.P = Pinlet
+        self.rho = rho #Densité [kg/m3] 
+        self.V = V #Vitesse [m/s]
+        self.P = Pinlet #Pression [Pa]
         if mu == 0.0 and nu == 0.0:
             print('Erreur : mu ou nu doivent être caractérisée')
             sys.exit(1)

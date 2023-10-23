@@ -6,7 +6,7 @@ class fluid():
         self.V = V #Vitesse [m/s]
         self.P = Pinlet #Pression [Pa]
         if mu == 0.0 and nu == 0.0:
-            print('Erreur : mu ou nu doivent être caractérisée')
+            print('Erreur : \u03BC (mu) ou \u03BD (nu) doivent être caractérisée')
             sys.exit(1)
         if mu == 0.0:
             self.nu = nu

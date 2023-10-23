@@ -25,10 +25,10 @@ class parser():
                 self.Unit=0.0254
                 self.UnitID = 'ft'
             elif int(lines[lines.index("$INSUNITS\n")+2]) ==4:
-                self.Unit=10e-3
+                self.Unit=1e-3
                 self.UnitID = 'mm'
             elif int(lines[lines.index("$INSUNITS\n")+2]) ==5:
-                self.Unit=10e-2
+                self.Unit=1e-2
                 self.UnitID = 'cm'
             elif int(lines[lines.index("$INSUNITS\n")+2]) ==6:
                 self.Unit=1
@@ -45,7 +45,7 @@ class parser():
             Index_ARC=[index for index, elem in enumerate(Entities) if elem=='ARC\n']
             
             Attributs_droite=[' 10\n', ' 20\n', ' 30\n', ' 11\n', ' 21\n', ' 31\n']
-            Attributs_arc=[' 10\n', ' 20\n', ' 30\n', ' 40\n', ' 50\n', ' 51\n']
+            Attributs_arc=[' 10\n', ' 20\n', ' 30\n', ' 40\n', ' 50\n', ' 51\n', '210\n', '220\n', '230\n']
             self.Droite=np.zeros((self.Nb_lines, 7))#6 coordonées pour décrire une droite (2 points 3D)+ 1 donnée d'index 
             for i in range(self.Nb_lines-1):
                 for j,att in enumerate(Attributs_droite):
@@ -59,10 +59,10 @@ class parser():
             for i in range(self.Nb_arc-1):
                 for j,att in enumerate(Attributs_arc):
                     self.Arc[i,j] = str(Entities[Entities[Index_ARC[i]:Index_ARC[i+1]].index(att)+1+Index_ARC[i]])
-                self.Arc[i, 6] = str(Index_ARC[i])
+                self.Arc[i, 9] = str(Index_ARC[i])
             for j,att in enumerate(Attributs_arc):
                 self.Arc[-1,j] = str(Entities[Entities[Index_ARC[-1]:2*Index_ARC[-1]-Index_ARC[-2]].index(att)+1+Index_ARC[-1]])
-            self.Arc[-1, 6] = str(Index_ARC[-1])
+            self.Arc[-1, 9] = str(Index_ARC[-1])
                 # for j in range(4):
                 #     self.Arc[i, j] = str(Entities[Index_ARC[i]+12+j*2])
                 # self.Arc[i, 4] = str(Entities[Index_ARC[i]+28])
